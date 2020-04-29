@@ -1,27 +1,47 @@
 package com.pratik.erostestapp
 
 import android.os.Bundle
+import android.view.Menu
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var navController : NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+         navController = findNavController(R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_movies, R.id.navigation_favorite))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_movies, R.id.navigation_favorite
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        NavigationUI.setupActionBarWithNavController(this@MainActivity,navController)
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        Toast.makeText(applicationContext,"onSupportNavigateUp", Toast.LENGTH_LONG).show()
+        return NavigationUI.navigateUp( navController,null)
+                || super.onSupportNavigateUp()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return true
+    }
 }

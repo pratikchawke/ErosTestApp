@@ -21,7 +21,6 @@ class MoviesFragment : Fragment() {
 
     private lateinit var movieViewModel: MoviesViewModel
     private  var moviesResultList : ArrayList<Result> = ArrayList()
-    private lateinit var moviesList: MoviesList
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +38,6 @@ class MoviesFragment : Fragment() {
         recyclerView.adapter = moviesListAdapter
 
         movieViewModel.moviesArrayList.observe(viewLifecycleOwner, Observer { list ->
-           Log.d("Pratik","Observing data on movieViewModel")
             getMoviesListResult(list)
             moviesListAdapter.notifyDataSetChanged()
             //todo -  dismiss loader
@@ -48,7 +46,6 @@ class MoviesFragment : Fragment() {
     }
 
     private fun getMoviesListResult(list : MoviesList){
-        Log.d("Pratik","getMovieListResult : "+list)
         if (list !=null){
             // todo - validate response code and messages
             moviesResultList.addAll(list.results)

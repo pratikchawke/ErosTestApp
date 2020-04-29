@@ -28,7 +28,7 @@ class MoviesListAdapter(private val context : Context?, private val movieList : 
         Glide.with(context!!).load(AppConstants.BASE_IMAGE_URL+ movieList[position].poster_path).into(holder.imageView)
         holder.imageView.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("data",movieList[position].toString())
+            intent.putExtra("data", movieList[position].toString())
             context.startActivity(intent)
         }
     }
