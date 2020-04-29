@@ -9,8 +9,11 @@ import com.pratik.erostestapp.utils.AppConstants
 
 class MoviesViewModel : ViewModel() {
     private  var moviesRepo : MoviesListRepo = MoviesListRepo()
-    private val moviesResponse : LiveData<MoviesList> = MutableLiveData<MoviesList>().apply {
-         moviesRepo.getMoviesList(AppConstants.API_KEY,AppConstants.INITIAL_INDEX)
+    private  var moviesResponseMutableLiveData : MutableLiveData<MoviesList>
+
+    init {
+        moviesResponseMutableLiveData =  moviesRepo.getMoviesList(AppConstants.API_KEY, AppConstants.INITIAL_INDEX)
     }
-    val moviesArrayList: LiveData<MoviesList> = moviesResponse
+
+    val moviesArrayList: LiveData<MoviesList> = moviesResponseMutableLiveData
 }

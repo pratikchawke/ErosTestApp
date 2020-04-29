@@ -1,6 +1,7 @@
 package com.pratik.erostestapp.movies
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,17 +29,17 @@ class MoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         //todo - show loader
-        movieViewModel =
-            ViewModelProviders.of(this).get(MoviesViewModel::class.java)
+        movieViewModel = ViewModelProviders.of(this).get(MoviesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_movies, container, false)
 
         val recyclerView = root.findViewById<RecyclerView>(R.id.moviesRV)
         val recyclerViewManager = GridLayoutManager(context, 3)
         recyclerView.layoutManager = recyclerViewManager
-        val moviesListAdapter : MoviesListAdapter = MoviesListAdapter(context,moviesResultList)
+        val moviesListAdapter = MoviesListAdapter(context,moviesResultList)
         recyclerView.adapter = moviesListAdapter
 
         movieViewModel.moviesArrayList.observe(viewLifecycleOwner, Observer { list ->
+           Log.d("Pratik","Observing data on movieViewModel")
             getMoviesListResult(list)
             moviesListAdapter.notifyDataSetChanged()
             //todo -  dismiss loader
@@ -47,10 +48,10 @@ class MoviesFragment : Fragment() {
     }
 
     private fun getMoviesListResult(list : MoviesList){
+        Log.d("Pratik","getMovieListResult : "+list)
         if (list !=null){
             // todo - validate response code and messages
             moviesResultList.addAll(list.results)
-
         }else{
             Toast.makeText(context, " Error in Response !!!",Toast.LENGTH_SHORT).show()
         }

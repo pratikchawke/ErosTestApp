@@ -18,7 +18,7 @@ class MoviesListRepo {
     fun getMoviesList(
         apiKey: String?,
         pageNumber: Int
-    ): LiveData<MoviesList?> {
+    ): MutableLiveData<MoviesList> {
         val data: MutableLiveData<MoviesList> = MutableLiveData()
         apiRequest.getMoviesList(apiKey, pageNumber)
             ?.enqueue(object : Callback<MoviesList?> {
@@ -30,11 +30,13 @@ class MoviesListRepo {
                         data.value = response.body()
                     }
                 }
+
                 override fun onFailure(
                     call: Call<MoviesList?>,
                     t: Throwable
                 ) {
-                    data.value =null
+                    Log.d("Pratik",t.cause?.message)
+                    data.value = null
                 }
             })
         return data
