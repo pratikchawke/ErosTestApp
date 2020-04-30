@@ -14,7 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var navController : NavController
+    lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-         navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(this@MainActivity,navController)
+        NavigationUI.setupActionBarWithNavController(this@MainActivity, navController)
     }
+
     override fun onSupportNavigateUp(): Boolean {
-        Toast.makeText(applicationContext,"onSupportNavigateUp", Toast.LENGTH_LONG).show()
-        return NavigationUI.navigateUp( navController,null)
+        return NavigationUI.navigateUp(navController, null)
                 || super.onSupportNavigateUp()
     }
 

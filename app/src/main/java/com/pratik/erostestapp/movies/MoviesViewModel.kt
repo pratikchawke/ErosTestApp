@@ -1,19 +1,31 @@
 package com.pratik.erostestapp.movies
 
+//import com.pratik.erostestapp.retrofit.repository.MoviesListRepo
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pratik.erostestapp.movies.model.MoviesList
-import com.pratik.erostestapp.retrofit.repository.MoviesListRepo
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
+import com.pratik.erostestapp.movies.model.Result
+import com.pratik.erostestapp.paging.MovieDataSourceFactory
 import com.pratik.erostestapp.utils.AppConstants
 
+//import com.pratik.erostestapp.utils.NetworkState
+
 class MoviesViewModel : ViewModel() {
-    private  var moviesRepo : MoviesListRepo = MoviesListRepo()
-    private  var moviesResponseMutableLiveData : MutableLiveData<MoviesList>
+
+    lateinit var movieDataPagedList: LiveData<PagedList<Result>>
+    lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Result>>
 
     init {
-        moviesResponseMutableLiveData =  moviesRepo.getMoviesList(AppConstants.API_KEY, AppConstants.INITIAL_INDEX)
+        val dataSourceFactory = MovieDataSourceFactory()
+        liveDataSource = dataSourceFactory.movieLiveDataSource
+        val config: PagedList.Config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPageSize(AppConstants.PAGE_SIZE)
+            .build()
+        movieDataPagedList = (LivePagedListBuilder(dataSourceFactory, config)).build()
+//        moviesResponseMutableLiveData = moviesRepo.getMoviesList(AppConstants.API_KEY, AppConstants.INITIAL_INDEX)
     }
 
-    val moviesArrayList: LiveData<MoviesList> = moviesResponseMutableLiveData
 }
