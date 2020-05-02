@@ -2,19 +2,24 @@ package com.pratik.erostestapp
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.pratik.erostestapp.model.Result
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_movies, R.id.navigation_favorite
+                R.id.navigation_movies, R.id.navigation_favourite
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -43,5 +48,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return true
+    }
+
+    companion object {
+        var favouriteDataList: MutableLiveData<ArrayList<Result>> =
+            MutableLiveData<ArrayList<Result>>()
+        var resultList : ArrayList<Result> = ArrayList();
+        var rootView : View? = null
     }
 }

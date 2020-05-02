@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_movies" />
 
     <fragment
-        android:id="@+id/navigation_favorite"
-        android:name="com.pratik.erostestapp.favorite.FavoriteFragment"
-        android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorite" />
+        android:id="@+id/navigation_favourite"
+        android:name="com.pratik.erostestapp.favourite.FavouriteFragment"
+        android:label="@string/title_favourites"
+        tools:layout="@layout/fragment_favourite" />
 
 </navigation>

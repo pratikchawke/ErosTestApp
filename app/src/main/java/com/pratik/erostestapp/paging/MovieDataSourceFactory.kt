@@ -3,7 +3,7 @@ package com.pratik.erostestapp.paging
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.pratik.erostestapp.movies.model.Result
+import com.pratik.erostestapp.model.Result
 
 class MovieDataSourceFactory : DataSource.Factory<Int, Result>() {
 

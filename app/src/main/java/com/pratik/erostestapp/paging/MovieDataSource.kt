@@ -2,8 +2,8 @@ package com.pratik.erostestapp.paging
 
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
-import com.pratik.erostestapp.movies.model.MoviesList
-import com.pratik.erostestapp.movies.model.Result
+import com.pratik.erostestapp.model.MoviesList
+import com.pratik.erostestapp.model.Result
 import com.pratik.erostestapp.retrofit.ApiRequest
 import com.pratik.erostestapp.retrofit.RetrofitBuilder
 import com.pratik.erostestapp.utils.AppConstants

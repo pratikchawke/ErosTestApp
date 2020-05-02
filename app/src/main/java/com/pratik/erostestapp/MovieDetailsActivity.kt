@@ -13,8 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.pratik.erostestapp.databinding.ActivityMovieDetailsBinding
-import com.pratik.erostestapp.favorite.model.Favorite
-import com.pratik.erostestapp.movies.model.Result
+import com.pratik.erostestapp.model.Result
 import org.json.JSONObject
 import java.lang.Exception
 
@@ -37,7 +36,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             Log.d(TAG, "Extra : $extra")
             val jsonObject: JSONObject = JSONObject(extra)
             val movieDetails: Result = gson.fromJson(jsonObject.toString(), Result::class.java)
-            binding.movie = movieDetails
+            binding.detail = movieDetails
             supportActionBar?.title = movieDetails.original_title
         } catch (ex: JsonParseException) {
             Log.d(TAG, "JsonParseException : $ex")

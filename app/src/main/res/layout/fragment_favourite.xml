@@ -5,10 +5,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".movies.MoviesFragment">
+      >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/moviesRV"
+            android:id="@+id/faouriteRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -1,13 +1,16 @@
-package com.pratik.erostestapp.favorite
+package com.pratik.erostestapp.favourite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pratik.erostestapp.MainActivity
+import com.pratik.erostestapp.model.Result
 
-class FavoriteViewModel : ViewModel() {
+class FavouriteViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is favorite Fragment"
+    var favouriteData: MutableLiveData<ArrayList<Result>> = MutableLiveData<ArrayList<Result>>()
+
+    init {
+        favouriteData = MainActivity.favouriteDataList
     }
-    val text: LiveData<String> = _text
 }

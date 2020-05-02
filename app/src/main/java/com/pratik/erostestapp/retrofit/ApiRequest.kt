@@ -1,6 +1,6 @@
 package com.pratik.erostestapp.retrofit
 
-import com.pratik.erostestapp.movies.model.MoviesList
+import com.pratik.erostestapp.model.MoviesList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

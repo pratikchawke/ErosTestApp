@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="5dp"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <data>
+
+        <variable
+            name="movie"
+            type="com.pratik.erostestapp.model.Result" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/ic_launcher"
-        android:scaleType="fitXY" />
+        android:layout_height="200dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
 
-</androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_launcher"
+            android:scaleType="fitXY"
+            app:imageUrl="@{movie.poster_path}" />
+
+        <ImageView
+            android:id="@+id/favouriteBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@{movie.favourite ? @drawable/ic_heart_selected :@drawable/ic_heart}"
+            app:favIcon="@{movie.favourite}" />
+
+    </androidx.cardview.widget.CardView>
+</layout>

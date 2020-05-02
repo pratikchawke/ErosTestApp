@@ -3,7 +3,7 @@ package com.pratik.erostestapp.retrofit.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pratik.erostestapp.movies.model.MoviesList
+import com.pratik.erostestapp.model.MoviesList
 import com.pratik.erostestapp.retrofit.ApiRequest
 import com.pratik.erostestapp.retrofit.RetrofitBuilder
 import retrofit2.Call
