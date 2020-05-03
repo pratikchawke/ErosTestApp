@@ -1,13 +1,10 @@
 package com.pratik.erostestapp
 
-import android.app.Dialog
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import android.view.Window
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -18,16 +15,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pratik.erostestapp.model.Result
-import com.pratik.erostestapp.utils.AppUtils
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
+    private val TAG: String = MainActivity.javaClass.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context =this
         setContentView(R.layout.activity_main)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)
@@ -35,9 +30,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_movies, R.id.navigation_favourite
-            )
+            setOf(R.id.navigation_movies, R.id.navigation_favourite)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -49,19 +42,12 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-
     companion object {
         var favouriteDataList: MutableLiveData<ArrayList<Result>> =
             MutableLiveData<ArrayList<Result>>()
         var resultList: ArrayList<Result> = ArrayList();
         var rootView: View? = null
-        lateinit var context: Context
-
-//        fun showLoading(){
-//            this.runOnUiThread( {
-//                AppUtils.showLoader(context)
-//            })
-//        }
+        var isSearchedQuery: Boolean = false
+        var query: String? = null
     }
-
 }

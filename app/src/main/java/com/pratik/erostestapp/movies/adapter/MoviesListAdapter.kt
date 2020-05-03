@@ -2,15 +2,9 @@ package com.pratik.erostestapp.movies.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +13,7 @@ import com.pratik.erostestapp.MainActivity.Companion.resultList
 import com.pratik.erostestapp.MovieDetailsActivity
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.MovieItemViewBinding
-import com.pratik.erostestapp.favourite.FavouriteViewModel
 import com.pratik.erostestapp.model.Result
-import com.pratik.erostestapp.utils.AppUtils
-import kotlin.text.Charsets.UTF_8
 
 
 class MoviesListAdapter(private val context: Context?) :

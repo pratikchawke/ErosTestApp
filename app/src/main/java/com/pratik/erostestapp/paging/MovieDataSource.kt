@@ -26,7 +26,7 @@ class MovieDataSource(val loader: LoadingListener) :
     }
 
     private fun getInitialMovieList(callback: LoadInitialCallback<Int, Result>) {
-//        loader.showLoading()
+        loader.showLoading()
         apiRequest.getMoviesList(AppConstants.API_KEY, AppConstants.INITIAL_INDEX)
             ?.enqueue(object : Callback<MoviesList?> {
                 override fun onResponse(call: Call<MoviesList?>, response: Response<MoviesList?>) {
@@ -44,13 +44,13 @@ class MovieDataSource(val loader: LoadingListener) :
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
         Log.d("MovieDataSource", "loadAfter $NEXT_INDEX !!!")
-        if (NEXT_INDEX > 15)
+        if (NEXT_INDEX > 16)
             loader.showLoading()
         apiRequest.getMoviesList(AppConstants.API_KEY, NEXT_INDEX)
             ?.enqueue(object : Callback<MoviesList?> {
                 override fun onResponse(call: Call<MoviesList?>, response: Response<MoviesList?>) {
                     if (response.body() != null) {
-                        if (NEXT_INDEX > 15)
+                        if (NEXT_INDEX > 16)
                             loader.dismissLoading()
                         callback.onResult(response.body()!!.results, NEXT_INDEX)
                         NEXT_INDEX += 1

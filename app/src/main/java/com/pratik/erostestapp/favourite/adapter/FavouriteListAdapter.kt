@@ -31,11 +31,13 @@ class FavouriteListAdapter(private val context: Context?,private val movieList :
 
         val movieResult = movieList.get(position)
         holder.itemBinding.favouriteList = movieResult
+
         holder.itemBinding.favouriteItemImageVIew.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
             intent.putExtra("data", movieResult)
             context!!.startActivity(intent)
         }
+
         holder.itemBinding.favouriteBtn.setOnClickListener {
             MainActivity.resultList.remove(movieResult)
             MainActivity.favouriteDataList.value = MainActivity.resultList

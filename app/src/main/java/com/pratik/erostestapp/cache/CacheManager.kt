@@ -1,8 +1,6 @@
 package com.pratik.erostestapp.cache
 
 import android.content.Context
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import org.json.JSONArray
 import org.json.JSONObject
 

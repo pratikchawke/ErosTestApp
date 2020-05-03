@@ -11,26 +11,20 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchDataSource(val query: String) : PageKeyedDataSource<Int, Result>() {
+class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Result>() {
 
     private var apiRequest: ApiRequest =
         RetrofitBuilder.retrofitInstance!!.create(ApiRequest::class.java)
-    var NEXT_INDEX = 1;
+    var NEXT_INDEX = 2
 
     override fun loadInitial(
         params: PageKeyedDataSource.LoadInitialParams<Int>,
         callback: PageKeyedDataSource.LoadInitialCallback<Int, Result>
     ) {
-        getInitialSearchList(callback)
-    }
-
-
-    private fun getInitialSearchList(callback: PageKeyedDataSource.LoadInitialCallback<Int, Result>) {
         apiRequest.getSearchData(AppConstants.API_KEY, AppConstants.INITIAL_INDEX, query)
             ?.enqueue(object : Callback<MoviesList?> {
                 override fun onResponse(call: Call<MoviesList?>, response: Response<MoviesList?>) {
                     if (response.body() != null) {
-                        NEXT_INDEX = AppConstants.INITIAL_INDEX + 1
                         callback.onResult(response.body()!!.results, null, NEXT_INDEX)
                     }
                 }
@@ -42,8 +36,8 @@ class SearchDataSource(val query: String) : PageKeyedDataSource<Int, Result>() {
     }
 
     override fun loadAfter(
-        params: PageKeyedDataSource.LoadParams<Int>,
-        callback: PageKeyedDataSource.LoadCallback<Int, Result>
+        params: LoadParams<Int>,
+        callback: LoadCallback<Int, Result>
     ) {
         apiRequest.getSearchData(AppConstants.API_KEY, NEXT_INDEX, query)
             ?.enqueue(object : Callback<MoviesList?> {
@@ -61,8 +55,8 @@ class SearchDataSource(val query: String) : PageKeyedDataSource<Int, Result>() {
     }
 
     override fun loadBefore(
-        params: PageKeyedDataSource.LoadParams<Int>,
-        callback: PageKeyedDataSource.LoadCallback<Int, Result>
+        params: LoadParams<Int>,
+        callback: LoadCallback<Int, Result>
     ) {
         TODO("Not yet implemented")
     }

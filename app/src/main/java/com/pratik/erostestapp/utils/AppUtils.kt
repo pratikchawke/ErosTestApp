@@ -8,9 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
-import com.airbnb.lottie.LottieAnimationView
 import com.pratik.erostestapp.R
-import java.lang.Exception
 
 object AppUtils {
     private val TAG = AppUtils.javaClass.simpleName

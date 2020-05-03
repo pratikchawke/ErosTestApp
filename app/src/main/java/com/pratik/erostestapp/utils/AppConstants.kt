@@ -7,7 +7,5 @@ class AppConstants {
         var PAGE_SIZE: Int = 300;
         var SEARCH_PAGE_SIZE: Int = 10;
         val BASE_IMAGE_URL: String = "https://image.tmdb.org/t/p/w500"
-
-
     }
 }

@@ -1,14 +1,14 @@
-package com.pratik.erostestapp.movies
+package com.pratik.erostestapp.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pratik.erostestapp.listener.LoadingListener
 
-class MovieModelFactory(
+class SearchModelFactory(
     private val listener: LoadingListener
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val movieViewModel = MoviesViewModel(listener) as T
-        return movieViewModel
+        val searchViewModel = SearchViewModel(listener) as T
+        return searchViewModel
     }
 }

@@ -9,7 +9,6 @@ import com.pratik.erostestapp.model.Result
 
 class MovieDetailsActivity : AppCompatActivity() {
 
-    private val TAG = MovieDetailsActivity::class.java.simpleName
     private lateinit var binding: ActivityMovieDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

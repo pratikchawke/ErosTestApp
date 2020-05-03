@@ -10,7 +10,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.utils.AppConstants
-import java.util.*
 
 data class Result(
     val adult: Boolean,

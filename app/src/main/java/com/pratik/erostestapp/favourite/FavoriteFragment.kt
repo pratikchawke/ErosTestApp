@@ -14,7 +14,6 @@ import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.FragmentFavouriteBinding
 import com.pratik.erostestapp.favourite.adapter.FavouriteListAdapter
 import com.pratik.erostestapp.model.Result
-import kotlin.collections.ArrayList
 
 class FavouriteFragment : Fragment() {
 
