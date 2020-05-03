@@ -35,11 +35,38 @@ class MoviesListRepo {
                     call: Call<MoviesList?>,
                     t: Throwable
                 ) {
-                    Log.d("Pratik",t.cause?.message)
+                    Log.d("Pratik", t.cause?.message)
                     data.value = null
                 }
             })
         return data
     }
+
+//    fun getSearchList(
+//        apiKey: String?,
+//        pageNumber: Int
+//    ): MutableLiveData<MoviesList> {
+//        val data: MutableLiveData<MoviesList> = MutableLiveData()
+//        apiRequest.getSearchData(apiKey, pageNumber,query)
+//            ?.enqueue(object : Callback<MoviesList?> {
+//                override fun onResponse(
+//                    call: Call<MoviesList?>,
+//                    response: Response<MoviesList?>
+//                ) {
+//                    if (response.body() != null) {
+//                        data.value = response.body()
+//                    }
+//                }
+//
+//                override fun onFailure(
+//                    call: Call<MoviesList?>,
+//                    t: Throwable
+//                ) {
+//                    Log.d("Pratik", t.cause?.message)
+//                    data.value = null
+//                }
+//            })
+//        return data
+//    }
 
 }

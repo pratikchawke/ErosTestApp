@@ -10,5 +10,12 @@ interface ApiRequest {
     fun getMoviesList(
         @Query("api_key") apiKey: String?,
         @Query("page") page: Int
+    ): Call<MoviesList>
+
+    @GET("3/search/movie?")
+    fun getSearchData(
+        @Query("api_key") apiKey: String?,
+        @Query("page") page: Int,
+        @Query("query") query: String
     ): Call<MoviesList?>?
 }

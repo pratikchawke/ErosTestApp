@@ -1,12 +1,14 @@
 package com.pratik.erostestapp
 
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Menu
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -14,14 +16,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pratik.erostestapp.model.Result
-import kotlinx.android.synthetic.main.activity_main.*
+import com.pratik.erostestapp.utils.AppUtils
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        context =this
         setContentView(R.layout.activity_main)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -46,14 +49,19 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return true
-    }
 
     companion object {
         var favouriteDataList: MutableLiveData<ArrayList<Result>> =
             MutableLiveData<ArrayList<Result>>()
-        var resultList : ArrayList<Result> = ArrayList();
-        var rootView : View? = null
+        var resultList: ArrayList<Result> = ArrayList();
+        var rootView: View? = null
+        lateinit var context: Context
+
+//        fun showLoading(){
+//            this.runOnUiThread( {
+//                AppUtils.showLoader(context)
+//            })
+//        }
     }
+
 }

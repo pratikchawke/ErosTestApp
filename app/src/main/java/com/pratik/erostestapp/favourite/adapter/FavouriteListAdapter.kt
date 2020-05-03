@@ -1,28 +1,16 @@
-package com.pratik.erostestapp.favorite.adapter
+package com.pratik.erostestapp.favourite.adapter
 
-import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
-import android.os.Parcelable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.pratik.erostestapp.MainActivity
 import com.pratik.erostestapp.MovieDetailsActivity
 import com.pratik.erostestapp.R
-import com.pratik.erostestapp.cache.CacheManager
 import com.pratik.erostestapp.databinding.FavouriteItemViewBinding
-import com.pratik.erostestapp.databinding.MovieItemViewBinding
-import com.pratik.erostestapp.favourite.FavouriteViewModel
-import com.pratik.erostestapp.model.MoviesList
 import com.pratik.erostestapp.model.Result
-import com.pratik.erostestapp.utils.AppConstants
 
 
 class FavouriteListAdapter(private val context: Context?,private val movieList : ArrayList<Result>) :
@@ -45,15 +33,13 @@ class FavouriteListAdapter(private val context: Context?,private val movieList :
         holder.itemBinding.favouriteList = movieResult
         holder.itemBinding.favouriteItemImageVIew.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("data", movieResult.toString())
+            intent.putExtra("data", movieResult)
             context!!.startActivity(intent)
         }
         holder.itemBinding.favouriteBtn.setOnClickListener {
-            if (movieResult!!.favourite) {
-                movieResult.favourite = false
-            } else {
-                movieResult.favourite = true
-            }
+            MainActivity.resultList.remove(movieResult)
+            MainActivity.favouriteDataList.value = MainActivity.resultList
+            notifyDataSetChanged()
         }
     }
 

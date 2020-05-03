@@ -21,11 +21,12 @@ import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.MovieItemViewBinding
 import com.pratik.erostestapp.favourite.FavouriteViewModel
 import com.pratik.erostestapp.model.Result
+import com.pratik.erostestapp.utils.AppUtils
+import kotlin.text.Charsets.UTF_8
 
 
-class MoviesListAdapter(val context: Context?) :
+class MoviesListAdapter(private val context: Context?) :
     PagedListAdapter<Result, MoviesListAdapter.ItemViewHolder>(DIFF_CALLBACK) {
-
     lateinit var movieItemBinding: MovieItemViewBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -40,23 +41,21 @@ class MoviesListAdapter(val context: Context?) :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        val movieResult = getItem(position)
+        val movieResult : Result? = getItem(position)
         holder.itemBinding.movie = movieResult
 
         holder.itemBinding.imageView.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("data", movieResult.toString())
+            intent.putExtra("data",  movieResult)
             context!!.startActivity(intent)
         }
 
         holder.itemBinding.favouriteBtn.setOnClickListener {
             if (movieResult!!.favourite) {
-                Toast.makeText(context, "Result Removed ", Toast.LENGTH_LONG).show()
                 movieResult!!.favourite = false
                 holder.itemBinding.favouriteBtn.setImageResource(R.drawable.ic_heart)
                 resultList.remove(movieResult)
             } else {
-                Toast.makeText(context, "Result Added ", Toast.LENGTH_LONG).show()
                 movieResult!!.favourite = true
                 holder.itemBinding.favouriteBtn.setImageResource(R.drawable.ic_heart_selected)
                 resultList.add(movieResult)
@@ -82,4 +81,6 @@ class MoviesListAdapter(val context: Context?) :
                 }
             }
     }
+
+
 }
