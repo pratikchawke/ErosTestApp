@@ -11,13 +11,13 @@ import com.pratik.erostestapp.paging.MovieDataSourceFactory
 import com.pratik.erostestapp.utils.AppConstants
 
 
-class MoviesViewModel(loader: LoadingListener) : ViewModel() {
+class MoviesViewModel() : ViewModel() {
 
     var movieDataPagedList: LiveData<PagedList<Result>>
     var liveDataSource: LiveData<PageKeyedDataSource<Int, Result>>
 
     init {
-        val dataSourceFactory = MovieDataSourceFactory(loader)
+        val dataSourceFactory = MovieDataSourceFactory()
         liveDataSource = dataSourceFactory.movieLiveDataSource
         val config: PagedList.Config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)

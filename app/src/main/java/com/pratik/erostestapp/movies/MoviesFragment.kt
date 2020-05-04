@@ -33,7 +33,7 @@ class MoviesFragment : Fragment(), LoadingListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        loader = this
         setHasOptionsMenu(true)
         fragmentMoviesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_movies,
@@ -56,11 +56,13 @@ class MoviesFragment : Fragment(), LoadingListener {
                 Observer { list ->
                     moviesListAdapter.submitList(list)
                     moviesListAdapter.notifyDataSetChanged()
-                    MainActivity.isSearchedQuery = false
+                    if(MainActivity.isSearchedQuery){
+                        MainActivity.isSearchedQuery =false
+                    }
                 })
         } else {
             var movieViewModel =
-                ViewModelProviders.of(this, MovieModelFactory(this))
+                ViewModelProviders.of(this, MovieModelFactory())
                     .get(MoviesViewModel::class.java)
             movieViewModel.movieDataPagedList!!.observe(viewLifecycleOwner,
                 Observer { list ->
@@ -86,8 +88,9 @@ class MoviesFragment : Fragment(), LoadingListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 MainActivity.query = query
                 MainActivity.isSearchedQuery = true
-                hideKeyboard(searchView)
                 refreshView()
+                searchView.hideKeyboard()
+                searchView.onActionViewCollapsed()
                 return true
             }
         })
@@ -113,10 +116,6 @@ class MoviesFragment : Fragment(), LoadingListener {
         }
     }
 
-    fun hideKeyboard(view : View) {
-        val imm = view.context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
     fun refreshView() {
         val ft: FragmentTransaction = parentFragmentManager!!.beginTransaction()
         if (Build.VERSION.SDK_INT >= 26) {
@@ -124,4 +123,12 @@ class MoviesFragment : Fragment(), LoadingListener {
         }
         ft.detach(this).attach(this).commit()
     }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+companion object{
+    lateinit var loader : LoadingListener
+}
 }

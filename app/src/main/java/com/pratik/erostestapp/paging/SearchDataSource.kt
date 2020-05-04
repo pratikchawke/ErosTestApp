@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.pratik.erostestapp.model.MoviesList
 import com.pratik.erostestapp.model.Result
+import com.pratik.erostestapp.movies.MoviesFragment
 import com.pratik.erostestapp.retrofit.ApiRequest
 import com.pratik.erostestapp.retrofit.RetrofitBuilder
 import com.pratik.erostestapp.utils.AppConstants
@@ -21,16 +22,19 @@ class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Res
         params: PageKeyedDataSource.LoadInitialParams<Int>,
         callback: PageKeyedDataSource.LoadInitialCallback<Int, Result>
     ) {
+        MoviesFragment.loader.showLoading()
         apiRequest.getSearchData(AppConstants.API_KEY, AppConstants.INITIAL_INDEX, query)
             ?.enqueue(object : Callback<MoviesList?> {
                 override fun onResponse(call: Call<MoviesList?>, response: Response<MoviesList?>) {
                     if (response.body() != null) {
                         callback.onResult(response.body()!!.results, null, NEXT_INDEX)
+                        MoviesFragment.loader.dismissLoading()
                     }
                 }
 
                 override fun onFailure(call: Call<MoviesList?>, t: Throwable) {
                     Log.d("Pratik", t.cause?.message)
+                    MoviesFragment.loader.dismissLoading()
                 }
             })
     }
@@ -39,17 +43,20 @@ class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Res
         params: LoadParams<Int>,
         callback: LoadCallback<Int, Result>
     ) {
+        MoviesFragment.loader.showLoading()
         apiRequest.getSearchData(AppConstants.API_KEY, NEXT_INDEX, query)
             ?.enqueue(object : Callback<MoviesList?> {
                 override fun onResponse(call: Call<MoviesList?>, response: Response<MoviesList?>) {
                     if (response.body() != null) {
                         NEXT_INDEX += 1
                         callback.onResult(response.body()!!.results, NEXT_INDEX)
+                        MoviesFragment.loader.dismissLoading()
                     }
                 }
 
                 override fun onFailure(call: Call<MoviesList?>, t: Throwable) {
                     Log.d("Pratik", t.cause?.message)
+                    MoviesFragment.loader.dismissLoading()
                 }
             })
     }

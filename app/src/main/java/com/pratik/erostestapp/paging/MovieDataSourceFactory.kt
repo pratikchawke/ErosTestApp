@@ -6,7 +6,7 @@ import androidx.paging.PageKeyedDataSource
 import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.model.Result
 
-class MovieDataSourceFactory(private val loader : LoadingListener) :
+class MovieDataSourceFactory() :
     DataSource.Factory<Int, Result>() {
 
     val movieLiveDataSource = MutableLiveData<PageKeyedDataSource<Int, Result>>()
@@ -14,7 +14,7 @@ class MovieDataSourceFactory(private val loader : LoadingListener) :
 
 
     override fun create(): DataSource<Int, Result> {
-        movieDataSource = MovieDataSource(loader)
+        movieDataSource = MovieDataSource()
         movieLiveDataSource.postValue(movieDataSource)
         return movieDataSource!!
     }
