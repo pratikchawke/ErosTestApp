@@ -29,6 +29,7 @@ class FavouriteListAdapter(private val context: Context?,private val movieList :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
+
         val movieResult = movieList.get(position)
         holder.itemBinding.favouriteList = movieResult
 

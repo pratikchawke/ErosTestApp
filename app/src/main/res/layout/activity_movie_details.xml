@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="detail"
             type="com.pratik.erostestapp.model.Result" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        tools:visibility="visible"
-        tools:context=".activity.MovieDetailsActivity">
+        tools:context=".activity.MovieDetailsActivity"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="32dp"
+            android:background="@drawable/ic_launcher_background"
             android:scaleType="centerCrop"
             app:imageUrl="@{detail.backdrop_path}"
-            android:background="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
