@@ -12,7 +12,7 @@ import com.pratik.erostestapp.paging.SearchDataSourceFactory
 import com.pratik.erostestapp.utils.AppConstants
 
 
-class SearchViewModel(val loader: LoadingListener) : ViewModel() {
+class SearchViewModel : ViewModel() {
 
      var searchDataPagedList: LiveData<PagedList<Result>>
      var liveDataSource: LiveData<PageKeyedDataSource<Int, Result>>

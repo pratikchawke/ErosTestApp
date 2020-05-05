@@ -8,7 +8,16 @@
     <fragment
         android:id="@+id/navigation_movies"
         android:name="com.pratik.erostestapp.movies.MoviesFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_movie"
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_navigation_movies_to_navigation_search"
+            app:destination="@id/navigation_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.pratik.erostestapp.search.SearchFragment"
         tools:layout="@layout/fragment_movies" />
 
     <fragment

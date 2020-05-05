@@ -1,11 +1,10 @@
 package com.pratik.erostestapp
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -15,11 +14,12 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.model.Result
 import com.pratik.erostestapp.utils.AppUtils
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LoadingListener {
     lateinit var navController: NavController
     private val Context.isConnected: Boolean
         get() {
@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        loader = this
 
         if (!isConnected) {
             AppUtils.showNoNetworkDialog(this)
@@ -55,8 +56,15 @@ class MainActivity : AppCompatActivity() {
         var favouriteDataList: MutableLiveData<ArrayList<Result>> =
             MutableLiveData<ArrayList<Result>>()
         var resultList: ArrayList<Result> = ArrayList();
-        var rootView: View? = null
-        var isSearchedQuery: Boolean = false
         var query: String? = null
+        lateinit var loader: LoadingListener
+    }
+
+    override fun showLoading() {
+        runOnUiThread { AppUtils.showLoader(this) }
+    }
+
+    override fun dismissLoading() {
+        runOnUiThread { AppUtils.hideLoader() }
     }
 }

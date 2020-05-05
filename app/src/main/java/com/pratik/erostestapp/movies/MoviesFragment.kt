@@ -1,82 +1,61 @@
 package com.pratik.erostestapp.movies
 
-import android.content.Context
-import android.os.Build
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pratik.erostestapp.MainActivity
-import com.pratik.erostestapp.MainActivity.Companion.rootView
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.FragmentMoviesBinding
-import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.movies.adapter.MoviesListAdapter
-import com.pratik.erostestapp.search.SearchModelFactory
-import com.pratik.erostestapp.search.SearchViewModel
-import com.pratik.erostestapp.utils.AppUtils.hideLoader
-import com.pratik.erostestapp.utils.AppUtils.showLoader
 
 
-class MoviesFragment : Fragment(), LoadingListener {
+class MoviesFragment : Fragment() {
 
     private lateinit var fragmentMoviesBinding: FragmentMoviesBinding
     private val handler = Handler()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        loader = this
         setHasOptionsMenu(true)
-        fragmentMoviesBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_movies,
-            container, false
-        )
-        rootView = fragmentMoviesBinding.root
+        fragmentMoviesBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
 
-        val recyclerView = rootView?.findViewById<RecyclerView>(R.id.moviesRV)
-        val recyclerViewManager = GridLayoutManager(context, 3)
+        val recyclerView = fragmentMoviesBinding.root?.findViewById<RecyclerView>(R.id.moviesRV)
+        val orientation = this.resources.configuration.orientation
+
+        var recyclerViewManager: GridLayoutManager
+        if (orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+            recyclerViewManager = GridLayoutManager(context, 3)
+        else
+            recyclerViewManager = GridLayoutManager(context, 4)
+
         recyclerView?.layoutManager = recyclerViewManager
         val moviesListAdapter = MoviesListAdapter(context)
         recyclerView?.adapter = moviesListAdapter
 
+        var movieViewModel =
+            ViewModelProviders.of(this, MovieModelFactory()).get(MoviesViewModel::class.java)
+        movieViewModel.movieDataPagedList.observe(viewLifecycleOwner,
+            Observer { list ->
+                moviesListAdapter.submitList(list)
+                moviesListAdapter.notifyDataSetChanged()
+            })
 
-        if (MainActivity.isSearchedQuery) {
-            var searchViewModel =
-                ViewModelProviders.of(this, SearchModelFactory(this))
-                    .get(SearchViewModel::class.java)
-            searchViewModel.searchDataPagedList!!.observe(viewLifecycleOwner,
-                Observer { list ->
-                    moviesListAdapter.submitList(list)
-                    moviesListAdapter.notifyDataSetChanged()
-                    if(MainActivity.isSearchedQuery){
-                        MainActivity.isSearchedQuery =false
-                    }
-                })
-        } else {
-            var movieViewModel =
-                ViewModelProviders.of(this, MovieModelFactory())
-                    .get(MoviesViewModel::class.java)
-            movieViewModel.movieDataPagedList!!.observe(viewLifecycleOwner,
-                Observer { list ->
-                    moviesListAdapter.submitList(list)
-                    moviesListAdapter.notifyDataSetChanged()
-                })
-        }
-
-        return rootView
+        return fragmentMoviesBinding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.searchview, menu)
-        val searchItem = menu!!.findItem(R.id.action_search)
+        val searchItem = menu.findItem(R.id.action_search)
         var searchView = searchItem.actionView as SearchView
         searchView.isSubmitButtonEnabled = true
         searchView.queryHint = "Enter movie name"
@@ -87,10 +66,8 @@ class MoviesFragment : Fragment(), LoadingListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 MainActivity.query = query
-                MainActivity.isSearchedQuery = true
-                refreshView()
-                searchView.hideKeyboard()
-                searchView.onActionViewCollapsed()
+                val navigationController = Navigation.findNavController(fragmentMoviesBinding.root!!)
+                navigationController.navigate(R.id.action_navigation_movies_to_navigation_search)
                 return true
             }
         })
@@ -104,31 +81,4 @@ class MoviesFragment : Fragment(), LoadingListener {
         } else super.onOptionsItemSelected(item)
     }
 
-    override fun showLoading() {
-        handler.post {
-            showLoader(requireContext())
-        }
-    }
-
-    override fun dismissLoading() {
-        handler.post {
-            hideLoader()
-        }
-    }
-
-    fun refreshView() {
-        val ft: FragmentTransaction = parentFragmentManager!!.beginTransaction()
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false)
-        }
-        ft.detach(this).attach(this).commit()
-    }
-
-    fun View.hideKeyboard() {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
-    }
-companion object{
-    lateinit var loader : LoadingListener
-}
 }
