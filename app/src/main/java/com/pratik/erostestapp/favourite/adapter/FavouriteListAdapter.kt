@@ -1,25 +1,24 @@
 package com.pratik.erostestapp.favourite.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pratik.erostestapp.MainActivity
-import com.pratik.erostestapp.MovieDetailsActivity
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.FavouriteItemViewBinding
+import com.pratik.erostestapp.listener.OnFavouriteListItemClickListener
 import com.pratik.erostestapp.model.Result
 
 
 class FavouriteListAdapter(
     private val context: Context?,
-    private val movieList: ArrayList<Result>
-) :
-    RecyclerView.Adapter<FavouriteListAdapter.ItemViewHolder>() {
+    private var movieList: ArrayList<Result>,
+    private val onFavouriteListClickListener: OnFavouriteListItemClickListener
+) : RecyclerView.Adapter<FavouriteListAdapter.ItemViewHolder>() {
 
     lateinit var favouriteItemBinding: FavouriteItemViewBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         favouriteItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -30,23 +29,18 @@ class FavouriteListAdapter(
         return ItemViewHolder(favouriteItemBinding)
     }
 
+    fun submitList(movieList: ArrayList<Result>) {
+        this.movieList = movieList
+    }
+
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-
-
         val movieResult = movieList.get(position)
         holder.itemBinding.favouriteList = movieResult
-
         holder.itemBinding.favouriteItemImageVIew.setOnClickListener {
-            val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("data", movieResult)
-            context!!.startActivity(intent)
+            onFavouriteListClickListener.onItemClicked(movieResult)
         }
-
-        holder.itemBinding.favouriteBtn.setOnClickListener {
-            movieResult.favourite = false
-            MainActivity.resultList.remove(movieResult)
-            MainActivity.favouriteDataList.value = MainActivity.resultList
-            notifyItemRemoved(position)
+        holder.itemBinding.removeFavourateBtn.setOnClickListener {
+            onFavouriteListClickListener.onItemRemove(movieResult, position)
         }
     }
 
@@ -58,5 +52,4 @@ class FavouriteListAdapter(
     override fun getItemCount(): Int {
         return movieList.size
     }
-
 }

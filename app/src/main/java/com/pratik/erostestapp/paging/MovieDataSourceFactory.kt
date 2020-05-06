@@ -3,7 +3,6 @@ package com.pratik.erostestapp.paging
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.model.Result
 
 class MovieDataSourceFactory() :

@@ -1,23 +1,20 @@
 package com.pratik.erostestapp.movies.adapter
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.pratik.erostestapp.MainActivity
-import com.pratik.erostestapp.MainActivity.Companion.resultList
-import com.pratik.erostestapp.MovieDetailsActivity
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.MovieItemViewBinding
+import com.pratik.erostestapp.listener.OnMovieItemClickListener
 import com.pratik.erostestapp.model.Result
 
 
-class MoviesListAdapter(private val context: Context?) :
+class MoviesListAdapter(val movieItemListener: OnMovieItemClickListener) :
     PagedListAdapter<Result, MoviesListAdapter.ItemViewHolder>(DIFF_CALLBACK) {
+
     lateinit var movieItemBinding: MovieItemViewBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -31,27 +28,14 @@ class MoviesListAdapter(private val context: Context?) :
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-
-        val movieResult : Result? = getItem(position)
+        val movieResult: Result? = getItem(position)
         holder.itemBinding.movie = movieResult
 
         holder.itemBinding.imageView.setOnClickListener {
-            val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("data",  movieResult)
-            context!!.startActivity(intent)
+            movieItemListener.onItemClicked(movieResult)
         }
-
         holder.itemBinding.favouriteBtn.setOnClickListener {
-            if (movieResult!!.favourite) {
-                movieResult!!.favourite = false
-                holder.itemBinding.favouriteBtn.setImageResource(R.drawable.ic_heart)
-                resultList.remove(movieResult)
-            } else {
-                movieResult!!.favourite = true
-                holder.itemBinding.favouriteBtn.setImageResource(R.drawable.ic_heart_selected)
-                resultList.add(movieResult)
-            }
-            MainActivity.favouriteDataList.value = resultList
+            movieItemListener.onFavouriteButtonClicked(movieResult, holder.itemBinding)
         }
     }
 
@@ -72,6 +56,4 @@ class MoviesListAdapter(private val context: Context?) :
                 }
             }
     }
-
-
 }

@@ -22,8 +22,9 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/ic_launcher"
+            android:foreground="?attr/selectableItemBackground"
             android:scaleType="fitXY"
+            android:background="@mipmap/ic_launcher"
             app:imageUrl="@{movie.poster_path}" />
 
         <ImageView
