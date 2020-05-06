@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pratik.erostestapp.MainActivity
+import com.pratik.erostestapp.MainActivity.Companion.movieViewModel
 import com.pratik.erostestapp.R
 import com.pratik.erostestapp.databinding.FragmentMoviesBinding
 import com.pratik.erostestapp.movies.adapter.MoviesListAdapter
@@ -42,9 +43,10 @@ class MoviesFragment : Fragment() {
         val moviesListAdapter = MoviesListAdapter(context)
         recyclerView?.adapter = moviesListAdapter
 
-        var movieViewModel =
-            ViewModelProviders.of(this, MovieModelFactory()).get(MoviesViewModel::class.java)
-        movieViewModel.movieDataPagedList.observe(viewLifecycleOwner,
+        if (movieViewModel == null)
+            movieViewModel =  ViewModelProviders.of(this, MovieModelFactory()).get(MoviesViewModel::class.java)
+
+        movieViewModel?.movieDataPagedList?.observe(viewLifecycleOwner,
             Observer { list ->
                 moviesListAdapter.submitList(list)
                 moviesListAdapter.notifyDataSetChanged()
@@ -66,7 +68,8 @@ class MoviesFragment : Fragment() {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 MainActivity.query = query
-                val navigationController = Navigation.findNavController(fragmentMoviesBinding.root!!)
+                val navigationController =
+                    Navigation.findNavController(fragmentMoviesBinding.root!!)
                 navigationController.navigate(R.id.action_navigation_movies_to_navigation_search)
                 return true
             }

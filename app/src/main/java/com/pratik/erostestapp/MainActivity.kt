@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -13,9 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.paging.PagedList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.model.Result
+import com.pratik.erostestapp.movies.MoviesViewModel
 import com.pratik.erostestapp.utils.AppUtils
 
 
@@ -55,6 +58,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
     companion object {
         var favouriteDataList: MutableLiveData<ArrayList<Result>> =
             MutableLiveData<ArrayList<Result>>()
+         var movieViewModel: MoviesViewModel? = null
         var resultList: ArrayList<Result> = ArrayList();
         var query: String? = null
         lateinit var loader: LoadingListener
