@@ -13,7 +13,10 @@ import com.pratik.erostestapp.databinding.FavouriteItemViewBinding
 import com.pratik.erostestapp.model.Result
 
 
-class FavouriteListAdapter(private val context: Context?,private val movieList : ArrayList<Result>) :
+class FavouriteListAdapter(
+    private val context: Context?,
+    private val movieList: ArrayList<Result>
+) :
     RecyclerView.Adapter<FavouriteListAdapter.ItemViewHolder>() {
 
     lateinit var favouriteItemBinding: FavouriteItemViewBinding
@@ -40,9 +43,10 @@ class FavouriteListAdapter(private val context: Context?,private val movieList :
         }
 
         holder.itemBinding.favouriteBtn.setOnClickListener {
+            movieResult.favourite = false
             MainActivity.resultList.remove(movieResult)
             MainActivity.favouriteDataList.value = MainActivity.resultList
-            notifyDataSetChanged()
+            notifyItemRemoved(position)
         }
     }
 

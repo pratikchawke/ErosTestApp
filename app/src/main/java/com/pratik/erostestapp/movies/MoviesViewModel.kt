@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
-import com.pratik.erostestapp.listener.LoadingListener
 import com.pratik.erostestapp.model.Result
 import com.pratik.erostestapp.paging.MovieDataSourceFactory
 import com.pratik.erostestapp.utils.AppConstants

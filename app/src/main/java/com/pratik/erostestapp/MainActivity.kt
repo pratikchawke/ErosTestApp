@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
     companion object {
         var favouriteDataList: MutableLiveData<ArrayList<Result>> =
             MutableLiveData<ArrayList<Result>>()
-         var movieViewModel: MoviesViewModel? = null
+        var movieViewModel: MoviesViewModel? = null
         var resultList: ArrayList<Result> = ArrayList();
         var query: String? = null
         lateinit var loader: LoadingListener
