@@ -72,6 +72,4 @@ class SearchListAdapter(private val context: Context?) :
                 }
             }
     }
-
-
 }

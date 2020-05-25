@@ -19,8 +19,7 @@ class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Res
     var NEXT_INDEX = 2
 
     override fun loadInitial(
-        params: PageKeyedDataSource.LoadInitialParams<Int>,
-        callback: PageKeyedDataSource.LoadInitialCallback<Int, Result>
+        params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Result>
     ) {
         loader.showLoading()
         apiRequest.getSearchData(AppConstants.API_KEY, AppConstants.INITIAL_INDEX, query)
@@ -39,10 +38,7 @@ class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Res
             })
     }
 
-    override fun loadAfter(
-        params: LoadParams<Int>,
-        callback: LoadCallback<Int, Result>
-    ) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
         loader.showLoading()
         apiRequest.getSearchData(AppConstants.API_KEY, NEXT_INDEX, query)
             ?.enqueue(object : Callback<MoviesList?> {
@@ -61,10 +57,7 @@ class SearchDataSource(private val query: String) : PageKeyedDataSource<Int, Res
             })
     }
 
-    override fun loadBefore(
-        params: LoadParams<Int>,
-        callback: LoadCallback<Int, Result>
-    ) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Result>) {
         TODO("Not yet implemented")
     }
 }

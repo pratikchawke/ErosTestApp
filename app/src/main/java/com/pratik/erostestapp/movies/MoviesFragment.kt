@@ -75,10 +75,11 @@ class MoviesFragment : Fragment(), OnMovieItemClickListener {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                MainActivity.query = query
+                val bundle = Bundle()
+                bundle.putString("query",query)
                 val navigationController =
                     Navigation.findNavController(fragmentMoviesBinding.root!!)
-                navigationController.navigate(R.id.action_navigation_movies_to_navigation_search)
+                navigationController.navigate(R.id.action_navigation_movies_to_navigation_search,bundle)
                 return true
             }
         })

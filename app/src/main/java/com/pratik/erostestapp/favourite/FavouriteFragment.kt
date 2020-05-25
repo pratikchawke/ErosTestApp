@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pratik.erostestapp.MainActivity
@@ -36,6 +37,12 @@ class FavouriteFragment : Fragment(), OnFavouriteListItemClickListener {
         val recyclerView = root.findViewById<RecyclerView>(R.id.faouriteRV)
         val recyclerViewManager = LinearLayoutManager(context)
         recyclerView.layoutManager = recyclerViewManager
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                recyclerViewManager.orientation
+            )
+        )
         favouriteListAdapter = FavouriteListAdapter(context, result, this)
         recyclerView.adapter = favouriteListAdapter
         MainActivity.favouriteDataList!!.observe(viewLifecycleOwner, Observer { result ->

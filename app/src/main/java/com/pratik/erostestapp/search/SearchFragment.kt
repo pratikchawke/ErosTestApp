@@ -27,7 +27,8 @@ class SearchFragment : Fragment() {
             inflater, R.layout.fragment_movies,
             container, false
         )
-        (activity as MainActivity).supportActionBar?.title = MainActivity.query
+        val query = arguments?.getString("query")
+        (activity as MainActivity).supportActionBar?.title = query
         val recyclerView = fragmentMoviesBinding.root?.findViewById<RecyclerView>(R.id.moviesRV)
         val orientation = this.resources.configuration.orientation
 
@@ -43,7 +44,7 @@ class SearchFragment : Fragment() {
 
 
         var searchViewModel =
-            ViewModelProviders.of(this, SearchModelFactory())
+            ViewModelProviders.of(this, SearchModelFactory(query!!))
                 .get(SearchViewModel::class.java)
         searchViewModel.searchDataPagedList!!.observe(viewLifecycleOwner,
             Observer { list ->

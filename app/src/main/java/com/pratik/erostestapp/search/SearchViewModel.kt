@@ -11,13 +11,13 @@ import com.pratik.erostestapp.paging.SearchDataSourceFactory
 import com.pratik.erostestapp.utils.AppConstants
 
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(val query : String) : ViewModel() {
 
      var searchDataPagedList: LiveData<PagedList<Result>>
      var liveDataSource: LiveData<PageKeyedDataSource<Int, Result>>
 
     init {
-        val dataSourceFactory = SearchDataSourceFactory(MainActivity.query!!)
+        val dataSourceFactory = SearchDataSourceFactory(query)
         liveDataSource = dataSourceFactory.searchLiveDataSource
         val config: PagedList.Config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
